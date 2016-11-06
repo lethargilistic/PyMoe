@@ -37,9 +37,32 @@ These are the files found in Abstractions.py. Mostly they're small pieces of inf
 
         The status of the series
 
+        The series status codes are strings for some reason and are different
+        for Anime and Manga. For some reason.
+
+        The possible values for anime are:
+        * 'Finished Airing'
+        * 'Currently Airing'
+        * 'Not Yet Aired'
+
+        The possible values for manga are:
+        * 'Finished'
+        * 'Publishing'
+        * 'Not Yet Published'
+
     .. py:attribute:: user : string
 
         The user's status for this series
+        
+        The user status codes are int and represent the following:
+
+        * 1 -> Watching
+        * 2 -> Completed
+        * 3 -> Oh Hold
+        * 4 -> Dropped
+        * 6 -> Plan To Watch
+    
+        Yes, really. 6.
 
 .. py:class:: NT_DATES
 
