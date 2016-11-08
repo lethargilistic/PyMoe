@@ -1,5 +1,5 @@
 from enum import Enum
-class Series(Enum):
+class SeriesStatus(Enum):
     Started = 1
     Finished = 2
     Planned = 3

@@ -4,7 +4,7 @@ import requests
 from .Abstractions import NT_MANGA, NT_ANIME
 from requests.auth import HTTPBasicAuth
 from .Objects import Anime, Manga, User
-from .Status import Series, UserStatus
+from .Status import SeriesStatus, UserStatus
 from ..errors import *
 
 class Mal:
@@ -320,7 +320,7 @@ class Mal:
                 date_start=item.find('my_start_date').text,
                 date_finish=item.find('my_finish_date').text,
                 image=item.find('series_image').text,
-                status_anime=Series(int(item.find('series_status').text)),
+                status_anime=SeriesStatus(int(item.find('series_status').text)),
                 status=UserStatus(int(item.find('my_status').text)),
                 rewatching=int(item.find('my_rewatching').text) if item.find('my_rewatching').text else None,
                 type=item.find('series_type').text,
@@ -354,7 +354,7 @@ class Mal:
                 date_start=item.find('my_start_date').text,
                 date_finish=item.find('my_finish_date').text,
                 image=item.find('series_image').text,
-                status_manga=Series(int(item.find('series_status').text)),
+                status_manga=SeriesStatus(int(item.find('series_status').text)),
                 status=UserStatus(int(item.find('my_status').text)),
                 rereading=int(item.find('my_rereadingg').text) if item.find('my_rereadingg') else None,
                 type=item.find('series_type').text,
