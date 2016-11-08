@@ -113,10 +113,3 @@ NT_TYPEDATA = namedtuple('NT_TYPEDATA', ['list', 'stats'])
 #: Abstraction for user anime and manga stats.
 NT_STATS = namedtuple('NT_TYPESTATS', ['completed', 'onhold', 'dropped', 'planned', 'current', 'days'])
 
-
-#: Status int to Name
-STATUS_INTS_ANIME = ['Currently Airing', 'Finished Airing', 'Not Yet Aired', 'Dropped', 'Plan to Watch']
-
-
-#: Status int to Name
-STATUS_INTS_MANGA = ['Publishing', 'Finished', 'Not Yet Published', 'Dropped', 'Plan to Read']

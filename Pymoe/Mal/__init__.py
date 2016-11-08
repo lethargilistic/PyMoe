@@ -1,7 +1,7 @@
 import html
 import xml.etree.ElementTree as ET
 import requests
-from .Abstractions import NT_MANGA, NT_ANIME, STATUS_INTS_ANIME, STATUS_INTS_MANGA
+from .Abstractions import NT_MANGA, NT_ANIME
 from requests.auth import HTTPBasicAuth
 from .Objects import Anime, Manga, User
 from ..errors import *
@@ -319,7 +319,7 @@ class Mal:
                 date_start=item.find('my_start_date').text,
                 date_finish=item.find('my_finish_date').text,
                 image=item.find('series_image').text,
-                status_anime=STATUS_INTS_ANIME[int(item.find('series_status').text)-1],
+                status_anime=int(item.find('series_status').text),
                 status=int(item.find('my_status').text),
                 rewatching=int(item.find('my_rewatching').text) if item.find('my_rewatching').text else None,
                 type=item.find('series_type').text,
@@ -353,7 +353,7 @@ class Mal:
                 date_start=item.find('my_start_date').text,
                 date_finish=item.find('my_finish_date').text,
                 image=item.find('series_image').text,
-                status_manga=STATUS_INTS_MANGA[int(item.find('series_status').text)-1],
+                status_manga=int(item.find('series_status').text),
                 status=int(item.find('my_status').text),
                 rereading=int(item.find('my_rereadingg').text) if item.find('my_rereadingg') else None,
                 type=item.find('series_type').text,
