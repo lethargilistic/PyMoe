@@ -4,7 +4,7 @@ class Series(Enum):
     Finished = 2
     Planned = 3
 
-class User(Enum):
+class UserStatus(Enum):
     Watching = 1
     Completed = 2
     Onhold = 3
