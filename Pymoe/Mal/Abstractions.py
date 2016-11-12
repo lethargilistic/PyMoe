@@ -87,61 +87,37 @@ class MediaList(list):
     # SeriesStatus
     @_lazy_property
     def started(self):
-        for i, itemhash in enumerate(self.started_list):
-            self.started_list[i] = self.hashmap[itemhash]
-
-        return self.started_list
+        return self._processlist(self.started_list)
 
     @_lazy_property
     def finished(self):
-        for i, itemhash in enumerate(self.finished_list):
-            self.finished_list[i] = self.hashmap[itemhash]
-
-        return self.finished_list
+        return self._processlist(self.finished_list)
 
     @_lazy_property
     def planned(self):
-        for i, itemhash in enumerate(self.planned_list):
-            self.planned_list[i] = self.hashmap[itemhash]
-
-        return self.planned_list
+        return self._processlist(self.planned_list)
 
     # UserStatus
     @_lazy_property
     def watching(self):
-        for i, itemhash in enumerate(self.u_watching_list):
-            self.u_watching_list[i] = self.hashmap[itemhash]
-
-        return self.u_watching_list
+        return self._processlist(self.u_watching_list)
 
     @_lazy_property
     def completed(self):
-        for i, itemhash in enumerate(self.u_completed_list):
-            self.u_completed_list[i] = self.hashmap[itemhash]
-
-        return self.u_completed_list
+        return self._processlist(self.u_completed_list)
 
     @_lazy_property
     def onhold(self):
-        for i, itemhash in enumerate(self.u_onhold_list):
-            self.u_onhold_list[i] = self.hashmap[itemhash]
-
-        return self.u_onhold_list
+        return self._processlist(self.u_onhold_list)
 
     @_lazy_property
     def dropped(self):
-        for i, itemhash in enumerate(self.u_dropped_list):
-            self.u_dropped_list[i] = self.hashmap[itemhash]
-
-        return self.u_dropped_list
+        return self._processlist(self.u_dropped_list)
     
     #TODO: May change UserStatus.Planned -> UserStatus.Plantoenjoy
     @_lazy_property
     def planned_u(self):
-        for i, itemhash in enumerate(self.u_planned_list):
-            self.u_planned_list[i] = self.hashmap[itemhash]
-
-        return self.u_planned_list
+        return self._processlist(self.u_planned_list)
 
 class NT_EPISODES:
     """
