@@ -1,8 +1,9 @@
 import xml.etree.ElementTree as ET
-from .Abstractions import NT_DATE_OBJ, NT_DATES, NT_EPISODES, NT_FLAGS, NT_REWATCHED, NT_SCORES, NT_STATUS, NT_STORAGE, NT_TYPEDATA, NT_STATS
+from abc import ABC, abstractmethod
+from .Abstractions import NT_DATE_OBJ, NT_DATES, NT_EPISODES, NT_FLAGS, NT_REWATCHED, NT_SCORES, NT_STATUS, NT_STORAGE, NT_TYPEDATA, NT_STATS, MediaList
 
 
-class _Media:
+class _Media(ABC):
     """
     A class for abstracting code within both Anime and Manga
     """
@@ -15,6 +16,14 @@ class _Media:
         representation = representation[:-2] + ")"
 
         return representation
+
+    @abstractmethod
+    def __init__(self):
+        pass
+
+    @abstractmethod
+    def to_xml(self):
+        pass
 
 class Anime(_Media):
     """
