@@ -2,7 +2,21 @@ import xml.etree.ElementTree as ET
 from .Abstractions import NT_DATE_OBJ, NT_DATES, NT_EPISODES, NT_FLAGS, NT_REWATCHED, NT_SCORES, NT_STATUS, NT_STORAGE, NT_TYPEDATA, NT_STATS
 
 
-class Anime:
+class _Media:
+    """
+    A class for abstracting code within both Anime and Manga
+    """
+    
+    def __repr__(self):
+        representation =  self.__class__.__name__ + "("
+        for key, value in vars(self).items():
+            representation += "{}={}, ".format(key, value)
+
+        representation = representation[:-2] + ")"
+
+        return representation
+
+class Anime(_Media):
     """
     An encapsulated Mal Anime Object for updates and adds.\n
     These can be created by the programmer or by the library, such as with searches or pulling user data.\n
@@ -127,7 +141,7 @@ class Anime:
         return '<?xml version="1.0" encoding="UTF-8"?>{}'.format(ET.tostring(root, encoding="unicode"))
 
 
-class Manga:
+class Manga(_Media):
     """
     An encapsulated Mal Manga Object for updates and adds.\n
     These can be created by the programmer or by the library, such as with searches or pulling user data.\n
