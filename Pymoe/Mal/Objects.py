@@ -293,13 +293,13 @@ class User:
         """
         self.id = kwargs.get('uid')
         self.name = kwargs.get('name')
-        self.anime = NT_TYPEDATA(list=kwargs.get('anime_list'), stats=NT_STATS(completed=kwargs.get('anime_completed'),
+        self.anime = NT_TYPEDATA(list=MediaList(kwargs.get('anime_list')), stats=NT_STATS(completed=kwargs.get('anime_completed'),
                                                                                onhold=kwargs.get('anime_onhold'),
                                                                                dropped=kwargs.get('anime_dropped'),
                                                                                planned=kwargs.get('anime_planned'),
                                                                                current=kwargs.get('anime_watching'),
                                                                                days=kwargs.get('anime_days')))
-        self.manga = NT_TYPEDATA(list=kwargs.get('manga_list'), stats=NT_STATS(completed=kwargs.get('manga_completed'),
+        self.manga = NT_TYPEDATA(list=MediaList(kwargs.get('manga_list')), stats=NT_STATS(completed=kwargs.get('manga_completed'),
                                                                                onhold=kwargs.get('manga_onhold'),
                                                                                dropped=kwargs.get('manga_dropped'),
                                                                                planned=kwargs.get('manga_planned'),

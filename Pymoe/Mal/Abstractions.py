@@ -1,4 +1,147 @@
 from collections import namedtuple
+from .Status import SeriesStatus, UserStatus
+
+class _lazy_property(object):
+    """
+    lazy evaluation decorator
+    derived from here: http://stackoverflow.com/a/6849299
+    """
+    def __init__(self,fget):
+        self.fget = fget
+        self.func_name = fget.__name__
+    def __get__(self, obj, cls):
+        if obj is None:
+            return None
+        value = self.fget(obj)
+        setattr(obj, self.func_name, value)
+        return value
+
+class MediaList(list):
+    def __init__(self, medialist):
+        super().__init__(medialist)
+        self.hashmap = dict()
+
+        #TODO: Replace with n-bit vectors?
+        #This is very expensive in space
+        self.started_list = []
+        self.finished_list = []
+        self.planned_list = []
+
+        self.u_watching_list = []
+        self.u_completed_list = []
+        self.u_onhold_list = []
+        self.u_dropped_list = []
+        self.u_planned_list = []
+
+        for item in medialist:
+            #Add the Media to a hashmap
+            itemhash = hash(item)
+            self.hashmap[hash(item)] = item
+
+            #Add the hash to the category list it belongs to
+            if item.status.series == SeriesStatus.Started:
+                self.started_list.append(itemhash)
+            elif item.status.series == SeriesStatus.Finished:
+                self.finished_list.append(itemhash)
+            elif item.status.series == SeriesStatus.Planned:
+                self.planned_list.append(itemhash)
+            else:
+                raise ValueError("Series status is invalid: " + repr(item.status.series))
+
+            if item.status.user == UserStatus.Watching:
+                self.u_watching_list.append(itemhash)
+            elif item.status.user == UserStatus.Completed:
+                self.u_completed_list.append(itemhash)
+            elif item.status.user == UserStatus.Onhold:
+                self.u_onhold_list.append(itemhash)
+            elif item.status.user == UserStatus.Dropped:
+                self.u_dropped_list.append(itemhash)
+            elif item.status.user == UserStatus.Planned:
+                self.u_planned_list.append(itemhash)
+            else:
+                raise ValueError("User status is invalid: " + repr(item.status.user))
+
+    #TODO: Decide if MediaList should be a fully implemented list subclass
+    # Of if it should just be immutable, making these unnecesary
+    """
+    def __add__(...):
+        #TODO: Also needs to add to hashmap, proper categories
+        raise NotImplementedError
+    def __delitem__(...):
+        #TODO: Also needs to del from hashmap, proper categories
+        raise NotImplementedError
+    def __delslice__(...):
+        raise NotImplementedError
+    def __setslice__(...):
+        raise NotImplementedError
+    def __setslice__(...):
+        raise NotImplementedError
+    """
+
+    def _processlist(self, alist):
+        for i, itemhash in enumerate(alist):
+            alist[i] = self.hashmap[itemhash]
+
+        return alist
+
+    # SeriesStatus
+    @_lazy_property
+    def started(self):
+        for i, itemhash in enumerate(self.started_list):
+            self.started_list[i] = self.hashmap[itemhash]
+
+        return self.started_list
+
+    @_lazy_property
+    def finished(self):
+        for i, itemhash in enumerate(self.finished_list):
+            self.finished_list[i] = self.hashmap[itemhash]
+
+        return self.finished_list
+
+    @_lazy_property
+    def planned(self):
+        for i, itemhash in enumerate(self.planned_list):
+            self.planned_list[i] = self.hashmap[itemhash]
+
+        return self.planned_list
+
+    # UserStatus
+    @_lazy_property
+    def watching(self):
+        for i, itemhash in enumerate(self.u_watching_list):
+            self.u_watching_list[i] = self.hashmap[itemhash]
+
+        return self.u_watching_list
+
+    @_lazy_property
+    def completed(self):
+        for i, itemhash in enumerate(self.u_completed_list):
+            self.u_completed_list[i] = self.hashmap[itemhash]
+
+        return self.u_completed_list
+
+    @_lazy_property
+    def onhold(self):
+        for i, itemhash in enumerate(self.u_onhold_list):
+            self.u_onhold_list[i] = self.hashmap[itemhash]
+
+        return self.u_onhold_list
+
+    @_lazy_property
+    def dropped(self):
+        for i, itemhash in enumerate(self.u_dropped_list):
+            self.u_dropped_list[i] = self.hashmap[itemhash]
+
+        return self.u_dropped_list
+    
+    #TODO: May change UserStatus.Planned -> UserStatus.Plantoenjoy
+    @_lazy_property
+    def planned_u(self):
+        for i, itemhash in enumerate(self.u_planned_list):
+            self.u_planned_list[i] = self.hashmap[itemhash]
+
+        return self.u_planned_list
 
 class NT_EPISODES:
     """
