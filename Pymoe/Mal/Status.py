@@ -9,4 +9,4 @@ class UserStatus(Enum):
     Completed = 2
     Onhold = 3
     Dropped = 4
-    Planned = 6 #Yes, 6. MAL's API value.
+    Plantoenjoy = 6 #Yes, 6. MAL's API value.

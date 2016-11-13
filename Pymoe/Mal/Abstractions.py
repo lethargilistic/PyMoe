@@ -27,11 +27,11 @@ class MediaList(list):
         self.finished_list = []
         self.planned_list = []
 
-        self.u_watching_list = []
-        self.u_completed_list = []
-        self.u_onhold_list = []
-        self.u_dropped_list = []
-        self.u_planned_list = []
+        self.watching_list = []
+        self.completed_list = []
+        self.onhold_list = []
+        self.dropped_list = []
+        self.plantoenjoy_list = []
 
         for item in medialist:
             #Add the Media to a hashmap
@@ -49,15 +49,15 @@ class MediaList(list):
                 raise ValueError("Series status is invalid: " + repr(item.status.series))
 
             if item.status.user == UserStatus.Watching:
-                self.u_watching_list.append(itemhash)
+                self.watching_list.append(itemhash)
             elif item.status.user == UserStatus.Completed:
-                self.u_completed_list.append(itemhash)
+                self.completed_list.append(itemhash)
             elif item.status.user == UserStatus.Onhold:
-                self.u_onhold_list.append(itemhash)
+                self.onhold_list.append(itemhash)
             elif item.status.user == UserStatus.Dropped:
-                self.u_dropped_list.append(itemhash)
-            elif item.status.user == UserStatus.Planned:
-                self.u_planned_list.append(itemhash)
+                self.dropped_list.append(itemhash)
+            elif item.status.user == UserStatus.Plantoenjoy:
+                self.plantoenjoy_list.append(itemhash)
             else:
                 raise ValueError("User status is invalid: " + repr(item.status.user))
 
@@ -100,24 +100,23 @@ class MediaList(list):
     # UserStatus
     @_lazy_property
     def watching(self):
-        return self._processlist(self.u_watching_list)
+        return self._processlist(self.watching_list)
 
     @_lazy_property
     def completed(self):
-        return self._processlist(self.u_completed_list)
+        return self._processlist(self.completed_list)
 
     @_lazy_property
     def onhold(self):
-        return self._processlist(self.u_onhold_list)
+        return self._processlist(self.onhold_list)
 
     @_lazy_property
     def dropped(self):
-        return self._processlist(self.u_dropped_list)
+        return self._processlist(self.dropped_list)
     
-    #TODO: May change UserStatus.Planned -> UserStatus.Plantoenjoy
     @_lazy_property
-    def planned_u(self):
-        return self._processlist(self.u_planned_list)
+    def plantoenjoy(self):
+        return self._processlist(self.plantoenjoy_list)
 
 class NT_EPISODES:
     """
