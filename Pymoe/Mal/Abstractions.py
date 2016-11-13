@@ -23,15 +23,15 @@ class MediaList(list):
 
         #TODO: Replace with n-bit vectors?
         #This is very expensive in space
-        self.started_list = []
-        self.finished_list = []
-        self.planned_list = []
-
-        self.watching_list = []
-        self.completed_list = []
-        self.onhold_list = []
-        self.dropped_list = []
-        self.plantoenjoy_list = []
+        self.category_lists = dict()
+        self.category_lists[SeriesStatus.Started] = []
+        self.category_lists[SeriesStatus.Finished] = []
+        self.category_lists[SeriesStatus.Planned] = []
+        self.category_lists[UserStatus.Watching] = []
+        self.category_lists[UserStatus.Completed] = []
+        self.category_lists[UserStatus.Onhold] = []
+        self.category_lists[UserStatus.Dropped] = []
+        self.category_lists[UserStatus.Plantoenjoy] = []
 
         for item in medialist:
             #Add the Media to a hashmap
@@ -39,27 +39,9 @@ class MediaList(list):
             self.hashmap[hash(item)] = item
 
             #Add the hash to the category list it belongs to
-            if item.status.series == SeriesStatus.Started:
-                self.started_list.append(itemhash)
-            elif item.status.series == SeriesStatus.Finished:
-                self.finished_list.append(itemhash)
-            elif item.status.series == SeriesStatus.Planned:
-                self.planned_list.append(itemhash)
-            else:
-                raise ValueError("Series status is invalid: " + repr(item.status.series))
+            self.category_lists[item.status.series].append(itemhash)
 
-            if item.status.user == UserStatus.Watching:
-                self.watching_list.append(itemhash)
-            elif item.status.user == UserStatus.Completed:
-                self.completed_list.append(itemhash)
-            elif item.status.user == UserStatus.Onhold:
-                self.onhold_list.append(itemhash)
-            elif item.status.user == UserStatus.Dropped:
-                self.dropped_list.append(itemhash)
-            elif item.status.user == UserStatus.Plantoenjoy:
-                self.plantoenjoy_list.append(itemhash)
-            else:
-                raise ValueError("User status is invalid: " + repr(item.status.user))
+            self.category_lists[item.status.user].append(itemhash)
 
     #TODO: Decide if MediaList should be a fully implemented list subclass
     # Of if it should just be immutable, making these unnecesary
@@ -87,36 +69,36 @@ class MediaList(list):
     # SeriesStatus
     @_lazy_property
     def started(self):
-        return self._processlist(self.started_list)
+        return self._processlist(self.category_lists[SeriesStatus.Started])
 
     @_lazy_property
     def finished(self):
-        return self._processlist(self.finished_list)
+        return self._processlist(self.category_lists[SeriesStatus.Finished])
 
     @_lazy_property
     def planned(self):
-        return self._processlist(self.planned_list)
+        return self._processlist(self.category_lists[SeriesStatus.Planned])
 
     # UserStatus
     @_lazy_property
     def watching(self):
-        return self._processlist(self.watching_list)
+        return self._processlist(self.category_lists[UserStatus.Watching])
 
     @_lazy_property
     def completed(self):
-        return self._processlist(self.completed_list)
+        return self._processlist(self.category_lists[UserStatus.Completed])
 
     @_lazy_property
     def onhold(self):
-        return self._processlist(self.onhold_list)
+        return self._processlist(self.category_lists[UserStatus.Onhold])
 
     @_lazy_property
     def dropped(self):
-        return self._processlist(self.dropped_list)
+        return self._processlist(self.category_lists[UserStatus.Dropped])
     
     @_lazy_property
     def plantoenjoy(self):
-        return self._processlist(self.plantoenjoy_list)
+        return self._processlist(self.category_lists[UserStatus.Plantoenjoy])
 
 class NT_EPISODES:
     """
