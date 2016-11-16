@@ -83,53 +83,30 @@ class Mal:
         final_list = []
         if which == 1:
             for item in data.findall('entry'):
-                syn = []
-                ds = {}
-                for child in item:
-                    if child.tag == 'id':
-                        ds['id'] = child.text
-                    elif child.tag == 'title':
-                        ds['title'] = child.text
-                    elif child.tag == 'synonyms' and child.text:
-                        syn.append(child.text.split(';'))
-                    elif child.tag == 'english' and child.text:
-                        syn.append(child.text)
-                    elif child.tag == 'episodes':
-                        ds['episodes'] = child.text
-                    elif child.tag == 'score':
-                        ds['score'] = child.text
-                    elif child.tag == 'start_date':
-                        ds['start_date'] = child.text
-                    elif child.tag == 'end_date':
-                        ds['end_date'] = child.text
-                    elif child.tag == 'synopsis' and child.text:
-                        ds['synopsis'] = html.unescape(child.text.replace('<br />', ''))
-                    elif child.tag == 'image':
-                        ds['image'] = child.text
-                    elif child.tag == 'type':
-                        ds['type'] = child.text
+                syn = item.find('synonyms').text.split(';') if item.find('synonyms').text else []
                 final_list.append(Anime(
-                    ds['id'],
-                    title=ds['title'],
-                    synonyms=syn,
-                    episode=ds['episodes'],
-                    average=ds['score'],
-                    anime_start=ds['start_date'],
-                    anime_end=ds['end_date'],
-                    synopsis=ds['synopsis'],
-                    image=ds['image'],
-                    type=ds['type']
+                    int(item.find('id').text),
+                    title=item.find('title').text,
+                    synonyms=syn.append(item.find('english').text),
+                    episode=int(item.find('episodes').text),
+                    average=float(item.find('score').text),
+                    anime_start=item.find('start_date').text,
+                    anime_end=item.find('end_date').text,
+                    synopsis=html.unescape(item.find('synopsis').text.replace('<br />', '')) if item.find('synopsis').text else None,
+                    image=item.find('image').text,
+                    status_anime=item.find('status').text,
+                    type=item.find('type').text
                 ))
         else:
             for item in data.findall('entry'):
                 syn = item.find('synonyms').text.split(';') if item.find('synonyms').text else []
                 final_list.append(Manga(
-                    item.find('id').text,
+                    int(item.find('id').text),
                     title=item.find('title').text,
                     synonyms=syn.append(item.find('english').text),
-                    chapters=item.find('chapters').text,
-                    volumes=item.find('volumes').text,
-                    average=item.find('score').text,
+                    chapters=int(item.find('chapters').text),
+                    volumes=int(item.find('volumes').text),
+                    average=float(item.find('score').text),
                     manga_start=item.find('start_date').text,
                     manga_end=item.find('end_date').text,
                     synopsis=html.unescape(item.find('synopsis').text.replace('<br />', '')) if item.find('synopsis').text else None,
@@ -344,11 +321,11 @@ class Mal:
                 item.find('series_mangadb_id').text,
                 title=item.find('series_title').text,
                 synonyms=syn,
-                chapters=item.find('series_chapters').text,
-                volumes=item.find('series_volumes').text,
-                chapter=item.find('my_read_chapters').text,
-                volume=item.find('my_read_volumes').text,
-                user=item.find('my_score').text,
+                chapters=int(item.find('series_chapters').text),
+                volumes=int(item.find('series_volumes').text),
+                chapter=int(item.find('my_read_chapters').text),
+                volume=int(item.find('my_read_volumes').text),
+                score=int(item.find('my_score').text),
                 manga_start=item.find('series_start').text,
                 manga_end=item.find('series_end').text,
                 date_start=item.find('my_start_date').text,
