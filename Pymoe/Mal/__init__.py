@@ -4,7 +4,7 @@ import requests
 from .Abstractions import NT_MANGA, NT_ANIME
 from requests.auth import HTTPBasicAuth
 from .Objects import Anime, Manga, User
-from .Status import SeriesStatus, UserStatus
+from .Status import SeriesStatus, UserStatus, AnimeType, MangaType
 from ..errors import *
 
 class Mal:
@@ -95,7 +95,7 @@ class Mal:
                     synopsis=html.unescape(item.find('synopsis').text.replace('<br />', '')) if item.find('synopsis').text else None,
                     image=item.find('image').text,
                     status_anime=item.find('status').text,
-                    type=item.find('type').text
+                    type=AnimeType(int(item.find('type').text))
                 ))
         else:
             for item in data.findall('entry'):
@@ -112,7 +112,7 @@ class Mal:
                     synopsis=html.unescape(item.find('synopsis').text.replace('<br />', '')) if item.find('synopsis').text else None,
                     image=item.find('image').text,
                     status_manga=item.find('status').text,
-                    type=item.find('type').text
+                    type=MangaType(int(item.find('type').text))
                 ))
         return final_list
 
@@ -300,7 +300,7 @@ class Mal:
                 status_anime=SeriesStatus(int(item.find('series_status').text)),
                 status=UserStatus(int(item.find('my_status').text)),
                 rewatching=int(item.find('my_rewatching').text) if item.find('my_rewatching').text else None,
-                type=item.find('series_type').text,
+                type=AnimeType(int(item.find('series_type').text)),
                 tags=item.find('my_tags').text.split(',') if item.find('my_tags').text else []
             ))
         return {'data': anime_list,
@@ -334,7 +334,7 @@ class Mal:
                 status_manga=SeriesStatus(int(item.find('series_status').text)),
                 status=UserStatus(int(item.find('my_status').text)),
                 rereading=int(item.find('my_rereadingg').text) if item.find('my_rereadingg') else None,
-                type=item.find('series_type').text,
+                type=MangaType(int(item.find('series_type').text)),
                 tags=item.find('my_tags').text.split(',') if item.find('my_tags').text else []
             ))
         return {'data': manga_list,
