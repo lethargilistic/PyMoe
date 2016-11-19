@@ -5,11 +5,11 @@ class SeriesStatus(Enum):
     Planned = 3
 
 class UserStatus(Enum):
-    Watching = 1
+    Viewing = 1
     Completed = 2
     Onhold = 3
     Dropped = 4
-    Plantoenjoy = 6 #Yes, 6. MAL's API value.
+    Plantoview = 6 #Yes, 6. MAL's API value.
 
 class AnimeType(Enum):
     Unknown = 0

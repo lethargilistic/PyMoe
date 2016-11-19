@@ -27,11 +27,11 @@ class MediaList(list):
         self.category_lists[SeriesStatus.Started] = []
         self.category_lists[SeriesStatus.Finished] = []
         self.category_lists[SeriesStatus.Planned] = []
-        self.category_lists[UserStatus.Watching] = []
+        self.category_lists[UserStatus.Viewing] = []
         self.category_lists[UserStatus.Completed] = []
         self.category_lists[UserStatus.Onhold] = []
         self.category_lists[UserStatus.Dropped] = []
-        self.category_lists[UserStatus.Plantoenjoy] = []
+        self.category_lists[UserStatus.Plantoview] = []
 
         for item in medialist:
             #Add the Media to a hashmap
@@ -82,7 +82,7 @@ class MediaList(list):
     # UserStatus
     @_lazy_property
     def watching(self):
-        return self._processlist(self.category_lists[UserStatus.Watching])
+        return self._processlist(self.category_lists[UserStatus.Viewing])
 
     @_lazy_property
     def completed(self):
@@ -97,8 +97,8 @@ class MediaList(list):
         return self._processlist(self.category_lists[UserStatus.Dropped])
     
     @_lazy_property
-    def plantoenjoy(self):
-        return self._processlist(self.category_lists[UserStatus.Plantoenjoy])
+    def plantoview(self):
+        return self._processlist(self.category_lists[UserStatus.Plantoview])
 
 class NT_EPISODES:
     """
