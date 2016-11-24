@@ -4,7 +4,7 @@ import requests
 from .Abstractions import NT_MANGA, NT_ANIME
 from requests.auth import HTTPBasicAuth
 from .Objects import Anime, Manga, User
-from .Status import SeriesStatus, UserStatus, AnimeType, MangaType
+from .Categories import SeriesStatus, UserStatus, AnimeType, MangaType
 from ..errors import *
 
 class Mal:

@@ -1,5 +1,5 @@
 from collections import namedtuple
-from .Status import SeriesStatus, UserStatus
+from .Categories import SeriesStatus, UserStatus
 
 class _lazy_property(object):
     """
