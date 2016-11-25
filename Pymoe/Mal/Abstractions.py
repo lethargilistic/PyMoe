@@ -27,12 +27,25 @@ class MediaList(list):
         self.category_lists[SeriesStatus.Started] = []
         self.category_lists[SeriesStatus.Finished] = []
         self.category_lists[SeriesStatus.Planned] = []
+
         self.category_lists[UserStatus.Viewing] = []
         self.category_lists[UserStatus.Completed] = []
         self.category_lists[UserStatus.Onhold] = []
         self.category_lists[UserStatus.Dropped] = []
         self.category_lists[UserStatus.Plantoview] = []
 
+        self.category_lists[0] = []
+        self.category_lists[1] = []
+        self.category_lists[2] = []
+        self.category_lists[3] = []
+        self.category_lists[4] = []
+        self.category_lists[5] = []
+        self.category_lists[6] = []
+        self.category_lists[7] = []
+        self.category_lists[8] = []
+        self.category_lists[9] = []
+        self.category_lists[10] = []
+        
         for item in medialist:
             #Add the Media to a hashmap
             itemhash = hash(item)
@@ -42,6 +55,8 @@ class MediaList(list):
             self.category_lists[item.status.series].append(itemhash)
 
             self.category_lists[item.status.user].append(itemhash)
+
+            self.category_lists[item.scores.user].append(itemhash)
 
     #TODO: Decide if MediaList should be a fully implemented list subclass
     # Of if it should just be immutable, making these unnecesary
@@ -99,6 +114,50 @@ class MediaList(list):
     @_lazy_property
     def plantoview(self):
         return self._processlist(self.category_lists[UserStatus.Plantoview])
+    
+    @_lazy_property
+    def userunrated(self):
+        return self._processlist(self.category_lists[0])
+
+    @_lazy_property
+    def userrated_1(self):
+        return self._processlist(self.category_lists[1])
+
+    @_lazy_property
+    def userrated_2(self):
+        return self._processlist(self.category_lists[2])
+
+    @_lazy_property
+    def userrated_3(self):
+        return self._processlist(self.category_lists[3])
+
+    @_lazy_property
+    def userrated_4(self):
+        return self._processlist(self.category_lists[4])
+
+    @_lazy_property
+    def userrated_5(self):
+        return self._processlist(self.category_lists[5])
+
+    @_lazy_property
+    def userrated_6(self):
+        return self._processlist(self.category_lists[6])
+
+    @_lazy_property
+    def userrated_7(self):
+        return self._processlist(self.category_lists[7])
+
+    @_lazy_property
+    def userrated_8(self):
+        return self._processlist(self.category_lists[8])
+
+    @_lazy_property
+    def userrated_9(self):
+        return self._processlist(self.category_lists[9])
+
+    @_lazy_property
+    def userrated_10(self):
+        return self._processlist(self.category_lists[10])
 
 class NT_EPISODES:
     """
